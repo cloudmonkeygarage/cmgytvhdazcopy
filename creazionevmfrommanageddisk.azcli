@@ -1,0 +1,23 @@
+
+subscriptionId=
+storageAccountName=
+storageContainerName=vhds
+storageAccountKey=
+az account set --subscription $subscriptionId 
+resourceGroupNameTarget=
+diskName=
+diskSize=
+location=westeurope
+az account set --subscription $subscriptionId
+
+#Creazione VM da disco managed OS
+osType=linux
+virtualMachineName=
+nicsname=
+managedDiskId=$(az disk show --name $diskName --resource-group $resourceGroupNameTarget --query [id] -o tsv)
+az vm create --name $virtualMachineName --resource-group $resourceGroupNameTarget --attach-os-disk $managedDiskId --os-type $osType --size Standard_E8s_v3 --nics $nicsname
+ 
+
+
+
+
